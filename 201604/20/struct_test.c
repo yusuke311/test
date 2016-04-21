@@ -53,7 +53,6 @@ int main(void)
 		printf("名前：%s\n",Person[i].name);
 		printf("住所：%s\n",Person[i].addr);
 		printf("年齢：%d\n",Person[i].age);
-
 	}
 	return 0;
 }

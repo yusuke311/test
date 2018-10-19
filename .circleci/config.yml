@@ -1,25 +1,24 @@
+#version: 2
+#jobs:
+#  build: #単体テストを実行するジョブ
+#    working_directory: ~/my-app
+#    docker:
+#      - image: ubuntu18:04
+#    steps:
+#      - checkout
+#      - run: apt install gradle
+#      - run:
+#          name: Run Build
+#          command: gradle clean build
+
+
 version: 2
 jobs:
-    build:
-        machine:
-          timezone:
-            Asia/Tokyo
-          services:
-            - docker
-
-dependencies:
-  override:
-    - echo 0
-
-test:
-  override:
-    - echo 0
-
-deployment:
-  development:
-    branch: develop
-    commands:
-      - pwd:
-      - ./deploy.sh:
-          environment:
-            IMAGE_TAG: $CIRCLE_SHA1
+  build: #単体テストを実行するジョブ
+    working_directory: /home/circleci/
+    # working_directory: /home/sasajima/spring/test
+    machine: true
+    steps:
+        - checkout
+        - run: |
+            docker build -t test .

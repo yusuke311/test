@@ -1,11 +1,11 @@
 version: 2
-    jobs:
-        build:
-            machine:
-              timezone:
-                Asia/Tokyo
-              services:
-                - docker
+jobs:
+    build:
+        machine:
+          timezone:
+            Asia/Tokyo
+          services:
+            - docker
 
 dependencies:
   override:

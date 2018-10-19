@@ -15,7 +15,7 @@
 version: 2
 jobs:
   build: #単体テストを実行するジョブ
-    working_directory: /home/circleci/
+    working_directory: ~/
     # working_directory: /home/sasajima/spring/test
     machine: true
     steps:

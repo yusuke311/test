@@ -1,8 +1,11 @@
-machine:
-  timezone:
-    Asia/Tokyo
-  services:
-    - docker
+version: 2
+    jobs:
+        build:
+            machine:
+              timezone:
+                Asia/Tokyo
+              services:
+                - docker
 
 dependencies:
   override:

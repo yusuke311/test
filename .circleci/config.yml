@@ -3,6 +3,7 @@ jobs:
     build: #ビルドジョブ
         working_directory: ~/test_dir
         machine: true
+        docker_layer_caching: true
         steps:
             - checkout
             - run:
@@ -22,6 +23,7 @@ jobs:
     deploy: # 実行イメージ作成
         working_directory: ~/test_dir
         machine: true
+        docker_layer_caching: true
         steps:
             - attach_workspace:
                 at: .

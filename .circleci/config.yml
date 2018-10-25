@@ -39,7 +39,6 @@ workflows:
     build-deploy:  # 任意の名前
         jobs:
             - build
-            - deploy
+            - deploy:
                 requires:
                     - build
-

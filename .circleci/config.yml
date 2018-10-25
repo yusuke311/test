@@ -31,12 +31,15 @@ jobs:
             - run:
                 name: Show file list
                 command: ls -l
+                working_directory: infra
             - run:
                 name: Docker build
                 command: docker-compose build
+                working_directory: infra
             - run:
                 name: Show docker image list
                 command: docker images
+                working_directory: infra
 
 workflows:
     version: 2

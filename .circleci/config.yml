@@ -1,27 +1,45 @@
-#version: 2
-#jobs:
-#  build: #単体テストを実行するジョブ
-#    working_directory: ~/my-app
-#    docker:
-#      - image: ubuntu18:04
-#    steps:
-#      - checkout
-#      - run: apt install gradle
-#      - run:
-#          name: Run Build
-#          command: gradle clean build
-
-
 version: 2
 jobs:
-  build: #単体テストを実行するジョブ
-    working_directory: ~/test_dir
-    machine: true
-    steps:
-        - checkout
-        - run:
-            name: entry point
-            command: pwd
-        - run:
-            name: file list
-            command: ls -l
+    build: #ビルドジョブ
+        working_directory: ~/test_dir
+        machine: true
+        steps:
+            - checkout
+            - run:
+                name: Show entry point
+                command: pwd
+            - run:
+                name: Show file list
+                command: ls -l
+            - run:
+                name: Gradle build
+                command: ./gradlew clean build
+            - persist_to_workspace:
+                root: .
+                paths:
+                  - .
+
+    deploy: # 実行イメージ作成
+        working_directory: ~/test_dir
+        machine: true
+        steps:
+            - attach_workspace:
+                at: .
+            - run:
+                name: Change dir
+                command: cd infra
+            - run:
+                name: Docker build
+                command: docker-compose build
+            - run:
+                name: Show docker image list
+
+workflows:
+    version: 2
+    build-deploy:  # 任意の名前
+        jobs:
+            - build
+            - deploy
+                requires:
+                    - build
+

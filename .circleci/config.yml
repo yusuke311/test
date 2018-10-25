@@ -33,6 +33,7 @@ jobs:
                 command: docker-compose build
             - run:
                 name: Show docker image list
+                command: docker images
 
 workflows:
     version: 2

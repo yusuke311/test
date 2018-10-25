@@ -15,10 +15,13 @@
 version: 2
 jobs:
   build: #単体テストを実行するジョブ
-    working_directory: ~/
-    # working_directory: /home/sasajima/spring/test
+    working_directory: ~/test_dir
     machine: true
     steps:
         - checkout
-        - run: |
-            docker build -t test .
+        - run:
+            name: entry point
+            command: pwd
+        - run:
+            name: file list
+            command: ls -l

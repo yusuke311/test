@@ -1,0 +1,20 @@
+version: '2'
+services:
+  app:
+    build: 
+      context: ../
+      dockerfile: ./infra/app/Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+        #    volumes:
+        #- ./:/opt/
+    environment:
+      PSQL_HOST: "db"
+  db:
+    build: 
+      context: ../
+      dockerfile: ./infra/db/Dockerfile
+    ports:
+      - "54321:5432"

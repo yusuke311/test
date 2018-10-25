@@ -29,6 +29,9 @@ jobs:
                 name: Change dir
                 command: cd infra
             - run:
+                name: Show file list
+                command: ls -l
+            - run:
                 name: Docker build
                 command: docker-compose build
             - run:

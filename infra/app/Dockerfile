@@ -30,7 +30,7 @@ ENV PATH=$PATH:$GRADLE_HOME/bin JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
 RUN mkdir -p /opt/cia
 WORKDIR /opt/cia
 
-COPY ./build/libs/cia-0.0.1-SNAPSHOT.jar /opt/cia/
+COPY ./build/libs/gs-spring-boot-0.1.0.jar /opt/cia/
 
 RUN ls -l /opt/cia
 

@@ -14,13 +14,13 @@ jobs:
                 command: pwd
             - run:
                 name: Show file list
-                command: ls -l
+                command: ls -l ~/
             - run:
                 name: Gradle build
                 command: ./gradlew clean build
             - save_cache:
                 paths:
-                    - .gradle
+                    - ~/.gradle
                 key: gradle-{{ checksum "build.gradle" }}
             - persist_to_workspace:
                 root: .

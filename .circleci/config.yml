@@ -39,7 +39,7 @@ jobs:
                 command: cd infra
             - run:
                 name: Show file list
-                command: ls -l
+                command: ls -la
                 working_directory: infra
             - run:
                 name: Docker build

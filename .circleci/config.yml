@@ -44,6 +44,12 @@ jobs:
                 path:
                     - ./infra/caches/images.tar
             - run:
+                name: Docker read cache
+                command: |
+                    if [ ! -f ./infra/caches/images.tar ]; then
+                        docker load -i ./infra/caches/images.tar
+                    fi
+            - run:
                 name: Change dir
                 command: cd infra
             - run:

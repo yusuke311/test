@@ -32,6 +32,8 @@ jobs:
                   - .
 
     image_push: # 実行イメージ作成
+        environment:
+            - PUSH_ECR_REPO: "852855340817.dkr.ecr.ap-northeast-1.amazonaws.com/test-application"
         working_directory: ~/test_dir
         machine: true
         docker_layer_caching: true
@@ -57,9 +59,17 @@ jobs:
                 command: ls -la
                 working_directory: infra
             - run:
-                name: Docker build
+                name: Docker compose build
                 command: docker-compose build
                 working_directory: infra
+            - run:
+                name: Docker build
+                command: docker build -t ${PUSH_ECR_REPO}:{{ .Revision }} .
+                working_directory: infra/app
+            - run:
+                name: Docker push
+                command: docker push ${PUSH_ECR_REPO}:{{ .Revision }}
+                working_directory: infra/app
             - run:
                 name: Show docker image list
                 command: docker images

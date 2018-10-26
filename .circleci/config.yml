@@ -8,7 +8,7 @@ jobs:
             - checkout
             - restore_cache:
                 keys:
-                    - gradle-{{ checksum "build.gradle" }}
+                    - v1-gradle-{{ checksum "build.gradle" }}
             - run:
                 name: Show entry point
                 command: pwd
@@ -25,7 +25,7 @@ jobs:
                 paths:
                     - ~/.gradle
                     - .gradle
-                key: gradle-{{ checksum "build.gradle" }}
+                key: v1-gradle-{{ checksum "build.gradle" }}
             - persist_to_workspace:
                 root: .
                 paths:

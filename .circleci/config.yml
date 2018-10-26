@@ -64,11 +64,11 @@ jobs:
                 working_directory: infra
             - run:
                 name: Docker build
-                command: docker build -t ${PUSH_ECR_REPO}:{{ .Revision }} .
+                command: docker build -t ${PUSH_ECR_REPO}:${CIRCLE_SHA1} .
                 working_directory: infra/app
             - run:
                 name: Docker push
-                command: docker push ${PUSH_ECR_REPO}:{{ .Revision }}
+                command: docker push ${PUSH_ECR_REPO}:${CIRCLE_SHA1}
                 working_directory: infra/app
             - run:
                 name: Show docker image list

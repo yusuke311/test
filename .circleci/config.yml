@@ -46,7 +46,7 @@ jobs:
             - run:
                 name: Docker read cache
                 command: |
-                    if [ ! -f ./infra/caches/images.tar ]; then
+                    if [ -e ./infra/caches/images.tar ]; then
                         docker load -i ./infra/caches/images.tar
                     fi
             - run:

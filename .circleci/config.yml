@@ -6,6 +6,9 @@ jobs:
         docker_layer_caching: true
         steps:
             - checkout
+            - restore_cache:
+                keys:
+                    - gradle-{{ checksum "build.gradle" }}
             - run:
                 name: Show entry point
                 command: pwd
@@ -15,6 +18,10 @@ jobs:
             - run:
                 name: Gradle build
                 command: ./gradlew clean build
+            - save_cache:
+                paths:
+                    - .gradle
+                key: gradle-{{ checksum "build.gradle" }}
             - persist_to_workspace:
                 root: .
                 paths:

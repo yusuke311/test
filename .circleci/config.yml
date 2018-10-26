@@ -1,6 +1,6 @@
 version: 2
 jobs:
-    build: #ビルドジョブ
+    test: #ビルドジョブ
         working_directory: ~/test_dir
         machine: true
         docker_layer_caching: true
@@ -19,6 +19,9 @@ jobs:
                 name: Show file list ./
                 command: ls -al
             - run:
+                name: Gradle build
+                command: ./gradlew clean test
+            - run:
                 name: Save test results
                 command: |
                   mkdir -p ~/junit/
@@ -28,6 +31,34 @@ jobs:
                 path: ./build/test-results/
             - store_artifacts:
                 path: ./build/test-results/
+            - save_cache:
+                paths:
+                    - ~/.gradle
+                    - .gradle
+                key: v1-gradle-{{ checksum "build.gradle" }}
+            - persist_to_workspace:
+                root: .
+                paths:
+                  - .
+
+    build: #ビルドジョブ
+        working_directory: ~/test_dir
+        machine: true
+        docker_layer_caching: true
+        steps:
+            - checkout
+            - restore_cache:
+                keys:
+                    - v1-gradle-{{ checksum "build.gradle" }}
+            - run:
+                name: Show entry point
+                command: pwd
+            - run:
+                name: Show file list ~/
+                command: ls -al ~/
+            - run:
+                name: Show file list ./
+                command: ls -al
             - run:
                 name: Gradle build
                 command: ./gradlew clean build
@@ -119,7 +150,10 @@ workflows:
     version: 2
     build-deploy:  # 任意の名前
         jobs:
-            - build
+            - test
+            - build:
+                retuires:
+                    - test
             - image_push:
                 requires:
                     - build

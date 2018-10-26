@@ -52,6 +52,11 @@ jobs:
                         docker load -i ./infra/caches/images.tar
                     fi
             - run:
+                name: pip package install
+                command: |
+                     sudo apt update && sudo apt install python-pip
+                     pip install 'requests[security]'
+            - run:
                 name: install aws
                 command: |
                     curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"

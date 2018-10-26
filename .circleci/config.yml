@@ -31,13 +31,18 @@ jobs:
                 paths:
                   - .
 
-    deploy: # 実行イメージ作成
+    image_push: # 実行イメージ作成
         working_directory: ~/test_dir
         machine: true
         docker_layer_caching: true
         steps:
             - attach_workspace:
                 at: .
+            - restore_cache:
+                keys:
+                    - docker-{{ .Branch }}--{{  checksum ".circleci/config.yml"  }}
+                path:
+                    - ./infra/caches/images.tar
             - run:
                 name: Change dir
                 command: cd infra
@@ -53,12 +58,24 @@ jobs:
                 name: Show docker image list
                 command: docker images
                 working_directory: infra
+            - run:
+                name: Docker cache save
+                command: |
+                    if [ ! -f ./infra/caches/images.tar ]; then
+                        mkdir -p ./infra/caches
+                        docker save $(docker images | awk 'NR>=2 && ! /^<none>/{print $1}') -o ./infra/caches/images.tar
+                    fi
+            - save_cache:
+                key: docker-{{ .Branch }}--{{ checksum ".circleci/config.yml" }}
+                paths:
+                    - ./infra/caches/images.tar
+                working_directory: infra
 
 workflows:
     version: 2
     build-deploy:  # 任意の名前
         jobs:
             - build
-            - deploy:
+            - image_push:
                 requires:
                     - build

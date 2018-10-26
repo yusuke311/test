@@ -64,7 +64,7 @@ jobs:
                     sudo ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
             - run:
                 name: "Log in to AWS ECR"
-                command: eval $(aws ecr get-login) 
+                command: eval $(aws ecr get-login --no-include-email) 
             - run:
                 name: Change dir
                 command: cd infra

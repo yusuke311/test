@@ -62,9 +62,13 @@ jobs:
                 name: Docker compose build
                 command: docker-compose build
                 working_directory: infra
+                #            - run:
+                #                name: Docker build
+                #                command: docker build -t ${PUSH_ECR_REPO}:${CIRCLE_SHA1} .
+                #                working_directory: infra/app
             - run:
-                name: Docker build
-                command: docker build -t ${PUSH_ECR_REPO}:${CIRCLE_SHA1} .
+                name: Set docker tag
+                command: docker tag cia_app:latest ${PUSH_ECR_REPO}:${CIRCLE_SHA1}
                 working_directory: infra/app
             - run:
                 name: Docker push

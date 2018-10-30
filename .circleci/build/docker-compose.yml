@@ -1,8 +1,0 @@
-version: '2'
-services:
-  cia:
-    build: 
-      context: ../../
-      dockerfile: ./.circleci/build/cia/Dockerfile
-    volumes:
-      - ../../:/opt/cia
